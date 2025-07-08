@@ -359,7 +359,7 @@
         <div class="hero-content-side">
             <div class="container mx-auto" data-aos="fade-right" data-aos-duration="1200">
                 
-                <h1 class="font-playfair text-6xl md:text-8xl font-bold text-gray-800 mb-24 leading-tight">
+                <h1 class="font-playfair text-6xl md:text-8xl font-bold text-gray-800 mb-24 mt-16 leading-tight">
                     <span class="text-yellow-600">Hajj & Umrah</span>
                 </h1>
                 
@@ -400,68 +400,123 @@
         <div class="particles enhanced-particles" id="packages-particles"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-gray-800 mb-4">Hajj Packages</h2>
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-gray-800 mb-4">Our Packages</h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">Choose from our carefully crafted packages designed to provide comfort, guidance, and spiritual fulfillment during your sacred journey</p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Essential Package -->
+            <!-- Package Tabs -->
+            <div class="flex justify-center mb-12" data-aos="fade-up">
+                <div class="bg-white p-2 rounded-full shadow-lg">
+                    <button id="umrah-tab" class="package-tab active px-8 py-3 rounded-full font-semibold transition-all duration-300 bg-gold-gradient text-black">
+                        <i class="fas fa-mosque mr-2"></i>
+                        Umrah Packages
+                    </button>
+                    <button id="hajj-tab" class="package-tab px-8 py-3 rounded-full font-semibold transition-all duration-300 text-gray-600 hover:text-yellow-600">
+                        <i class="fas fa-kaaba mr-2"></i>
+                        Hajj Packages
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Umrah Packages -->
+            <div id="umrah-packages" class="package-content grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Essential Umrah Package -->
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden hover-lift" data-aos="fade-up" data-aos-delay="100">
                     <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 1.jpg'); background-size: 100% 100%;"></div>
-                    <div class="p-8">
-                        <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Essential Package</h3>
-                        <div class="text-3xl font-bold text-yellow-600 mb-6">$4,999</div>
-                        <ul class="space-y-3 mb-8">
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Round-trip flights</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 3-star accommodation</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Guided tours</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Transportation in Saudi Arabia</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Experienced guide</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Daily meals included</li>
-                        </ul>
-                        <button class="w-full bg-gray-800 text-white py-3 rounded-full hover:bg-gray-700 transition-colors">Request Info</button>
+                    <div class="p-8 flex flex-col h-[calc(100%-16rem)]">
+                        <div>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Essential Umrah</h3>
+                            <div class="text-3xl font-bold text-yellow-600 mb-6">$1,999</div>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Round-trip flights</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 3-star Mecca hotel</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 3-star Medina hotel</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Transportation</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Guided Umrah rituals</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 7-day package</li>
+                            </ul>
+                        </div>
+                        <div class="mt-auto">
+                            <button class="w-full bg-gray-800 text-white py-3 rounded-full hover:bg-gray-700 transition-colors">Request Info</button>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Premium Package -->
+                <!-- Premium Umrah Package -->
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden hover-lift border-4 border-yellow-400" data-aos="fade-up" data-aos-delay="200">
                     <div class="bg-gold-gradient text-center py-2">
                         <span class="text-black font-semibold">MOST POPULAR</span>
                     </div>
                     <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 2.jpg'); background-size: 100% 100%;"></div>
-                    <div class="p-8">
-                        <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Premium Package</h3>
-                        <div class="text-3xl font-bold text-yellow-600 mb-6">$7,999</div>
-                        <ul class="space-y-3 mb-8">
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Business class flights</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 4-star accommodation</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> VIP guided tours</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Private transportation</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Premium meals</li>
-                        </ul>
-                        <button class="w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all">Request Info</button>
-                    </div>
-                </div>
-                
-                <!-- Luxury Package -->
-                <div class="bg-white rounded-3xl shadow-xl overflow-hidden hover-lift" data-aos="fade-up" data-aos-delay="300">
-                    <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 3.jpg'); background-size: 100% 100%;"></div>
-                    <div class="p-8">
-                        <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Luxury Package</h3>
-                        <div class="text-3xl font-bold text-yellow-600 mb-6">$12,999</div>
-                        <ul class="space-y-3 mb-8">
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> First class flights</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 5-star luxury hotels</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Private guided tours</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Luxury transportation</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Personal concierge</li>
-                            <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Gourmet dining</li>
-                        </ul>
-                        <button class="w-full bg-gray-800 text-white py-3 rounded-full hover:bg-gray-700 transition-colors">Request Info</button>
+                    <div class="p-8 flex flex-col h-[calc(100%-16rem-2rem)]">
+                        <div>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Premium Umrah</h3>
+                            <div class="text-3xl font-bold text-yellow-600 mb-6">$3,999</div>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Business class flights</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 5-star Mecca hotel</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 5-star Medina hotel</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Private transportation</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Personal Umrah guide</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 10-day package</li>
+                            </ul>
+                        </div>
+                        <div class="mt-auto">
+                            <button class="w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all">Request Info</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            
+            <!-- Hajj Packages -->
+            <div id="hajj-packages" class="package-content hidden grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Essential Hajj Package -->
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 3.jpg'); background-size: 100% 100%;"></div>
+                    <div class="p-8 flex flex-col h-[calc(100%-16rem)]">
+                        <div>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Essential Hajj</h3>
+                            <div class="text-3xl font-bold text-yellow-600 mb-6">$5,999</div>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Round-trip flights</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 3-star accommodation</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Mina tents</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Transportation</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Experienced Hajj guide</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 15-day package</li>
+                            </ul>
+                        </div>
+                        <div class="mt-auto">
+                            <button class="w-full bg-gray-800 text-white py-3 rounded-full hover:bg-gray-700 transition-colors">Request Info</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Premium Hajj Package -->
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden hover-lift border-4 border-yellow-400" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-gold-gradient text-center py-2">
+                        <span class="text-black font-semibold">MOST POPULAR</span>
+                    </div>
+                    <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 1.jpg'); background-size: 100% 100%;"></div>
+                    <div class="p-8 flex flex-col h-[calc(100%-16rem-2rem)]">
+                        <div>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Premium Hajj</h3>
+                            <div class="text-3xl font-bold text-yellow-600 mb-6">$12,999</div>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Business class flights</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 5-star accommodation</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Premium Mina tents</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Private transportation</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Personal Hajj guide</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> 20-day package</li>
+                            </ul>
+                        </div>
+                        <div class="mt-auto">
+                            <button class="w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all">Request Info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -600,9 +655,10 @@
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Preferred Package</label>
                             <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
-                                <option>Essential Package</option>
-                                <option>Premium Package</option>
-                                <option>Luxury Package</option>
+                                <option>Essential Umrah</option>
+                                <option>Premium Umrah</option>
+                                <option>Essential Hajj</option>
+                                <option>Premium Hajj</option>
                                 <option>Custom Package</option>
                             </select>
                         </div>
@@ -779,6 +835,36 @@
                 }
                 // Close mobile menu if open
                 mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Package Tabs Functionality
+        const packageTabs = document.querySelectorAll('.package-tab');
+        const packageContents = document.querySelectorAll('.package-content');
+        
+        packageTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                packageTabs.forEach(t => {
+                    t.classList.remove('active', 'bg-gold-gradient', 'text-black');
+                    t.classList.add('text-gray-600');
+                });
+                
+                // Add active class to clicked tab
+                tab.classList.add('active', 'bg-gold-gradient', 'text-black');
+                tab.classList.remove('text-gray-600');
+                
+                // Hide all package contents
+                packageContents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                
+                // Show selected package content
+                const targetId = tab.id.replace('-tab', '-packages');
+                const targetContent = document.getElementById(targetId);
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                }
             });
         });
 
