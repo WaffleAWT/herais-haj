@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herais Hajj - Umrah & Hajj Guides</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        .bg-gold-gradient {
+            background: linear-gradient(135deg, #d4af37, #f4e15c);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="flex items-center">
+                    <img src="assets/title.png" alt="Herais Hajj" class="h-16">
+                </a>
+                <a href="index.html" class="text-gray-600 hover:text-yellow-600 transition-colors">
+                    <i class="fas fa-home mr-2"></i>Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-16">
+        <div class="text-center mb-16">
+            <h1 class="font-playfair text-4xl md:text-5xl font-bold text-gray-800 mb-4">Umrah & Hajj Guides</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Download our comprehensive guides to help you prepare for your sacred journey</p>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
+            <!-- Guide Cards will be dynamically populated by JavaScript -->
+        </div>
+
+        <!-- Language Note -->
+        <div class="text-center mt-12 bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto">
+            <p class="text-gray-700">
+                <i class="fas fa-language text-yellow-600 text-xl mr-2"></i>
+                Need these guides in other languages? Contact us at 
+                <a href="mailto:info@heraishajj.com" class="text-yellow-600 hover:text-yellow-700 font-semibold">info@heraishajj.com</a>
+            </p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Herais Hajj. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to create guide cards
+        function createGuideCards() {
+            const guidesContainer = document.querySelector('.grid');
+            const guides = [
+                {
+                    title: "HERAIS Hajj and Umrah Quick Guide",
+                    description: "Quick reference guide for Hajj and Umrah",
+                    icon: "book",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "HERAIS Hajj and Umrah Quick Guide .pdf"
+                },
+                {
+                    title: "Madina Landmarks",
+                    description: "Guide to landmarks in Madina",
+                    icon: "landmark",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "Madina Landmarks.pdf"
+                },
+                {
+                    title: "Makkah Landmarks",
+                    description: "Guide to landmarks in Makkah",
+                    icon: "landmark",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "Makkah Landmarks.pdf"
+                },
+                {
+                    title: "The Prophets Mosque Guide",
+                    description: "Guide to Masjid An-Nabawi",
+                    icon: "mosque",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "The Prophets Mosque Guide.pdf"
+                },
+                {
+                    title: "Umrah Guide",
+                    description: "Complete Umrah guide in English",
+                    icon: "kaaba",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "Umrah Guide.pdf"
+                },
+                {
+                    title: "The grand Mosque Info",
+                    description: "Information about Masjid Al-Haram",
+                    icon: "mosque",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "The grand Mosque Info.pdf"
+                },
+                {
+                    title: "دليل المسجد النبوي الشريف الحرم النبوي",
+                    description: "Prophet's Mosque Guide (Arabic)",
+                    icon: "mosque",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "دليل المسجد النبوي الشريف الحرم النبوي.pdf"
+                },
+                {
+                    title: "دليل العمرة",
+                    description: "Umrah Guide (Arabic)",
+                    icon: "kaaba",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "دليل العمرة.pdf"
+                },
+                {
+                    title: "دلبل المسجد الحرام مكة",
+                    description: "Grand Mosque Guide (Arabic)",
+                    icon: "mosque",
+                    folder: "assets/Umrah & Haj Guides",
+                    filename: "دلبل المسجد الحرام مكة.pdf"
+                }
+            ];
+
+            guides.forEach(guide => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-lg p-3 md:p-6 hover-lift';
+                card.innerHTML = `
+                    <div class="text-center mb-4 md:mb-6">
+                        <div class="w-12 h-12 md:w-16 md:h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2 md:mb-4">
+                            <i class="fas fa-${guide.icon} text-xl md:text-2xl text-yellow-600"></i>
+                        </div>
+                        <h3 class="font-playfair text-sm md:text-xl font-bold text-gray-800 mb-1 md:mb-2">${guide.title}</h3>
+                        <p class="text-xs md:text-base text-gray-600 mb-4 md:mb-6">${guide.description}</p>
+                    </div>
+                    <a href="${guide.folder}/${guide.filename}" 
+                       class="block w-full bg-gold-gradient text-black py-2 md:py-3 rounded-full text-center text-sm md:text-base font-semibold hover:shadow-lg transition-all"
+                       download>
+                        <i class="fas fa-download mr-1 md:mr-2"></i>Download
+                    </a>
+                `;
+                guidesContainer.appendChild(card);
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', createGuideCards);
+    </script>
+</body>
+</html> 
