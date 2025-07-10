@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Visa/Hajj/Umrah Package - Herais Hajj</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- jsPDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <!-- FileSaver.js for better file handling -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <style>
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-inter { font-family: 'Inter', sans-serif; }
+        
+        /* Islamic Geometric Pattern Background */
+        .islamic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f7f3e9' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .bg-gold-gradient {
+            background: linear-gradient(135deg, #d4af37, #f4e15c);
+        }
+        
+        /* File upload styling */
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 2px dashed #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-btn:hover {
+            background: #fff;
+            border-color: #f4e15c;
+        }
+        
+        /* Form input focus styles */
+        .form-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+<body class="font-inter bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="index.html" class="flex items-center">
+                    <img src="assets/title.png" alt="Herais Hajj" class="h-20 w-auto">
+                </a>
+                <img src="assets/logo.png" alt="Logo" class="h-20 w-auto">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Application Form Section -->
+    <section class="py-16 islamic-pattern">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-gradient-to-br from-yellow-50 via-white to-yellow-50 rounded-3xl shadow-xl p-8 border border-yellow-100">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h1 class="font-playfair text-4xl font-bold text-gray-800 mb-4">Application Form</h1>
+                    <p class="text-gray-600">Please fill out all required information for your Visa/Hajj/Umrah application</p>
+                </div>
+
+                <form class="space-y-8" data-aos="fade-up">
+                    <!-- Package Selection -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Package Selection</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Select Package</label>
+                            <select required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                                <option value="">Select a package...</option>
+                                <optgroup label="Visa Package">
+                                    <option>Saudi Arabia Visa Package ($200)</option>
+                                </optgroup>
+                                <optgroup label="Umrah Packages">
+                                    <option>Premium Umrah Package ($4,990)</option>
+                                    <option>VIP Umrah Package ($6,990)</option>
+                                    <option>High Class Umrah Package ($9,990)</option>
+                                </optgroup>
+                                <optgroup label="Hajj Package">
+                                    <option>Essential Hajj Package ($14,999)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Personal Information</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">First Name</label>
+                                <input type="text" name="firstName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Middle Name</label>
+                                <input type="text" name="middleName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Last Name</label>
+                                <input type="text" name="lastName" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-6 mt-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Gender</label>
+                                <select name="gender" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                                    <option value="">Select gender...</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Marital Status</label>
+                                <select name="maritalStatus" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                                    <option value="">Select status...</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="divorced">Divorced</option>
+                                    <option value="widowed">Widowed</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Date of Birth</label>
+                                <input type="date" name="dateOfBirth" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-6 mt-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Country of Nationality</label>
+                                <select name="nationality" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                                    <option value="">Select country...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Country of Birth</label>
+                                <select name="birthCountry" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                                    <option value="">Select country...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">City of Birth</label>
+                                <input type="text" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-gray-700 font-medium mb-2">Profession</label>
+                            <input type="text" name="profession" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Contact Information</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Mobile Number</label>
+                                <input type="tel" name="mobile" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">WhatsApp Number</label>
+                                <input type="tel" name="whatsapp" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Email</label>
+                                <input type="email" name="email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Residence -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Current Residence</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+                        <div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 font-medium mb-2">Country of Residence</label>
+                                <select name="residenceCountry" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-colors">
+                                    <option value="">Select country...</option>
+                                    <option value="USA">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                </select>
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 font-medium mb-2">Address</label>
+                                <input type="text" name="address" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input" placeholder="Street address">
+                            </div>
+                            <div class="grid md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">City</label>
+                                    <input type="text" name="city" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">State/Province</label>
+                                    <input type="text" name="state" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-700 font-medium mb-2">ZIP/Postal Code</label>
+                                    <input type="text" name="zipCode" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Passport Information -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Passport Information</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Passport Type</label>
+                                <input type="text" name="passportType" value="Regular" readonly class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Passport Number</label>
+                                <input type="text" name="passportNumber" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-6 mt-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Issue Place</label>
+                                <input type="text" name="issuePlace" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Issue Date</label>
+                                <input type="date" name="issueDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Expiry Date</label>
+                                <input type="date" name="expiryDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Required Documents -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Required Documents</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+
+                        <!-- Personal Photo -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Personal Photo</h3>
+                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                                <h4 class="font-medium text-gray-800 mb-2">Photo Specifications:</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Dimension: 200 x 200 px</li>
+                                    <li>File size: 5 KB to 100 KB</li>
+                                    <li>Allowed formats: .jpg, .jpeg, .png, .gif, .bmp</li>
+                                    <li>Plain white background</li>
+                                    <li>Face should be clearly visible</li>
+                                </ul>
+                            </div>
+                            <div class="file-upload">
+                                <div class="upload-btn">
+                                    <i class="fas fa-upload mr-2"></i>
+                                    <span>Upload Personal Photo</span>
+                                </div>
+                                <input type="file" accept=".jpg,.jpeg,.png,.gif,.bmp" required class="form-input">
+                            </div>
+                        </div>
+
+                        <!-- Passport Copy -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Passport Copy</h3>
+                            <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                    <li>Clear copy of passport main page</li>
+                                    <li>All text must be clearly readable</li>
+                                    <li>Maximum file size: 5MB</li>
+                                </ul>
+                            </div>
+                            <div class="file-upload">
+                                <div class="upload-btn">
+                                    <i class="fas fa-upload mr-2"></i>
+                                    <span>Upload Passport Copy</span>
+                                </div>
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" required class="form-input">
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Accepted formats: PDF, JPG, JPEG, PNG</p>
+                        </div>
+
+                        <!-- Residency Document (Optional) -->
+                        <div class="mb-8">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Residency Document (Optional)</h3>
+                            <div class="bg-yellow-50 p-4 rounded-lg mb-4">
+                                <h4 class="font-medium text-yellow-800 mb-2">Only required if:</h4>
+                                <ul class="list-disc list-inside text-yellow-700 space-y-1">
+                                    <li>You are a USA resident (not citizen): Upload Green Card</li>
+                                    <li>You are a Canada resident (not citizen): Upload PR Card</li>
+                                    <li>You are a UK resident (not citizen): Upload Valid Visa/Residence Permit</li>
+                                </ul>
+                            </div>
+                            <div class="file-upload">
+                                <div class="upload-btn">
+                                    <i class="fas fa-upload mr-2"></i>
+                                    <span>Upload Residency Document</span>
+                                </div>
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" class="form-input">
+                            </div>
+                            <p class="text-sm text-gray-500 mt-2">Accepted formats: PDF, JPG, JPEG, PNG (Max 5MB)</p>
+                        </div>
+                    </div>
+
+                    <!-- Travel Dates -->
+                    <div class="mb-12">
+                        <div class="flex items-center mb-6">
+                            <h2 class="font-playfair text-2xl font-bold text-gray-800">Travel Dates</h2>
+                            <div class="flex-grow ml-4 h-px bg-gradient-to-r from-yellow-200 to-transparent"></div>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Expected Date of Arrival</label>
+                                <input type="date" name="arrivalDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Expected Date of Departure</label>
+                                <input type="date" name="departureDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg form-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consent Checkbox -->
+                    <div class="mb-8">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex items-center h-5">
+                                <input type="checkbox" required id="consent" class="h-4 w-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500">
+                            </div>
+                            <label for="consent" class="text-gray-700">
+                                I declare that all the information provided in this application is true and correct. I understand that providing false information may result in the rejection of my application and potential legal consequences. I also consent to the processing of my personal data for the purpose of my Visa/Hajj/Umrah application.
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center space-x-4">
+                        <button type="button" onclick="generatePDF()" class="bg-white border-2 border-yellow-500 text-yellow-700 px-12 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all">
+                            <i class="fas fa-file-pdf mr-2"></i>Preview as PDF
+                        </button>
+                        <button type="submit" class="bg-gold-gradient text-black px-12 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all">
+                            Submit Application
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Herais Hajj. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Initialize jsPDF
+        window.jsPDF = window.jspdf.jsPDF;
+
+        // Function to load image as base64
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    resolve(canvas.toDataURL('image/jpeg'));
+                };
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        // Function to get form field value safely
+        function getFieldValue(form, fieldName) {
+            const field = form.querySelector(`[name="${fieldName}"]`);
+            return field ? field.value : '';
+        }
+
+        // Generate form number
+        function generateFormNumber() {
+            return Math.floor(10000000 + Math.random() * 90000000).toString();
+        }
+
+        // Function to get application type and folder
+        function getApplicationType(packageValue) {
+            if (packageValue.toLowerCase().includes('visa')) {
+                return { type: 'visa', folder: 'visa' };
+            } else if (packageValue.toLowerCase().includes('umrah')) {
+                return { type: 'umrah', folder: 'umrah' };
+            } else if (packageValue.toLowerCase().includes('hajj')) {
+                return { type: 'hajj', folder: 'hajj' };
+            }
+            return { type: 'visa', folder: 'visa' };
+        }
+
+        async function generatePDF() {
+            try {
+                // Create new PDF document
+                const doc = new jsPDF();
+                
+                // Generate form number first
+                const formNumber = generateFormNumber();
+                const form = document.querySelector('form');
+                const packageSelect = form.querySelector('select');
+                const selectedPackage = packageSelect ? packageSelect.value : 'Visa Package';
+                const { type, folder } = getApplicationType(selectedPackage);
+
+                // Load images as base64 to ensure they're embedded correctly
+                const titleImage = await loadImage('assets/title.jpg');
+                
+                // Convert webp to png for logo
+                const img = new Image();
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = 'assets/logo.webp';
+                });
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const logoImage = canvas.toDataURL('image/png');
+                
+                // Add images to PDF
+                const pageWidth = doc.internal.pageSize.getWidth();
+                
+                // Add title image (left) - even smaller size
+                doc.addImage(titleImage, 'JPEG', 15, 10, 35, 12);
+                
+                // Add logo image (right) - even smaller size
+                doc.addImage(logoImage, 'PNG', pageWidth - 30, 10, 15, 12);
+                
+                // Initialize yPos for content positioning
+                let yPos = 35;
+                
+                // Add form title with form number
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text(`${type.toUpperCase()} Application Form # ${type.toLowerCase()}-${formNumber}`, 105, yPos, { align: 'center' });
+                
+                // Reset font and continue with content
+                doc.setFont(undefined, 'normal');
+                yPos += 15; // Add spacing after title
+                
+                // Set default font size for content
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+
+                // Helper function to add a field to PDF with proper spacing
+                function addField(label, value, y) {
+                    doc.setFontSize(10); // Set size for field text
+                    const labelWidth = doc.getTextWidth(label + ': ');
+                    doc.setFont(undefined, 'bold');
+                    doc.text(label + ': ', 20, y);
+                    doc.setFont(undefined, 'normal');
+                    const displayValue = value ? value.toString().trim() : 'Not provided';
+                    doc.text(displayValue, 20 + labelWidth + doc.getTextWidth(' '), y);
+                    return y + 7; // Reduced spacing between fields
+                }
+
+                // Package Selection
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Selected Package', 20, yPos);
+                yPos += 7;
+                doc.setFont(undefined, 'normal');
+                yPos = addField('Package Type', selectedPackage, yPos);
+                yPos += 5;
+
+                // Personal Information
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Personal Information', 20, yPos);
+                yPos += 10;
+
+                const fullName = [
+                    getFieldValue(form, 'firstName'),
+                    getFieldValue(form, 'middleName'),
+                    getFieldValue(form, 'lastName')
+                ].filter(Boolean).join(' ');
+
+                yPos = addField('Full Name', fullName, yPos);
+                yPos = addField('Gender', getFieldValue(form, 'gender'), yPos);
+                yPos = addField('Marital Status', getFieldValue(form, 'maritalStatus'), yPos);
+                yPos = addField('Date of Birth', getFieldValue(form, 'dateOfBirth'), yPos);
+                yPos = addField('Nationality', getFieldValue(form, 'nationality'), yPos);
+                yPos = addField('Birth Country', getFieldValue(form, 'birthCountry'), yPos);
+                yPos = addField('Profession', getFieldValue(form, 'profession'), yPos);
+
+                // Add new page if needed
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                // Contact Information
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Contact Information', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Mobile', getFieldValue(form, 'mobile'), yPos);
+                yPos = addField('WhatsApp', getFieldValue(form, 'whatsapp'), yPos);
+                yPos = addField('Email', getFieldValue(form, 'email'), yPos);
+
+                // Current Residence
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Current Residence', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Country', getFieldValue(form, 'residenceCountry'), yPos);
+                yPos = addField('City', getFieldValue(form, 'city'), yPos);
+                yPos = addField('ZIP/Postal Code', getFieldValue(form, 'zipCode'), yPos);
+                yPos = addField('Address', getFieldValue(form, 'address'), yPos);
+
+                // Passport Information
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Passport Information', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Passport Number', getFieldValue(form, 'passportNumber'), yPos);
+                yPos = addField('Issue Place', getFieldValue(form, 'issuePlace'), yPos);
+                yPos = addField('Issue Date', getFieldValue(form, 'issueDate'), yPos);
+                yPos = addField('Expiry Date', getFieldValue(form, 'expiryDate'), yPos);
+
+                // Travel Dates
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Travel Dates', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Expected Arrival', getFieldValue(form, 'arrivalDate'), yPos);
+                yPos = addField('Expected Departure', getFieldValue(form, 'departureDate'), yPos);
+
+                // Add footer with divider line
+                const footerY = doc.internal.pageSize.getHeight() - 30; // Position footer 30 units from bottom
+                doc.setDrawColor(200, 200, 200);
+                doc.line(20, footerY - 5, 190, footerY - 5);
+                
+                doc.setFontSize(9);
+                doc.setTextColor(100, 100, 100);
+                
+                // Centered contact info
+                doc.text('Email: info@heraishajj.com | +1 519 800 1353', 105, footerY, { align: 'center' });
+                
+                // Centered website in bold
+                doc.setFont(undefined, 'bold');
+                doc.text('www.heraishajj.com', 105, footerY + 5, { align: 'center' });
+                
+                // Right-aligned submission timestamp, moved down further
+                doc.setFont(undefined, 'normal');
+                doc.text(`Submitted: ${new Date().toLocaleString()}`, 190, footerY + 25, { align: 'right' });
+
+                // Save PDF with new naming format
+                const fileName = `${type}-${formNumber}.pdf`;
+                
+                // Get PDF as base64 and blob
+                const pdfBase64 = doc.output('datauristring');
+                const pdfBlob = doc.output('blob');
+                
+                // Save locally for user
+                doc.save(fileName);
+
+                // Prepare form data for server
+                const formData = new FormData();
+                formData.append('pdfFile', pdfBlob, fileName);
+                formData.append('folder', folder);
+                formData.append('pdfData', pdfBase64);
+
+                // Send to server using fetch
+                fetch('save-application.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        throw new Error(data.error || 'Failed to save on server');
+                    }
+                })
+                .catch(error => {
+                    console.error('Server save error:', error);
+                    alert('Note: The PDF was downloaded but could not be saved to our records. Please keep your copy safe.');
+                });
+
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('There was an error generating the PDF. Please try again.');
+            }
+        }
+
+        // Country list for nationality and birth country
+        const countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", 
+            "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", 
+            "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", 
+            "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", 
+            "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", 
+            "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", 
+            "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", 
+            "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", 
+            "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", 
+            "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, North", 
+            "Korea, South", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", 
+            "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", 
+            "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", 
+            "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", 
+            "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", 
+            "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", 
+            "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", 
+            "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", 
+            "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", 
+            "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", 
+            "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", 
+            "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", 
+            "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", 
+            "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+        ];
+
+        // Populate country dropdowns (nationality and birth country)
+        document.querySelectorAll('select[name="nationality"], select[name="birthCountry"]').forEach(select => {
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                select.appendChild(option);
+            });
+        });
+
+        // Handle residency document requirement
+        const nationalitySelect = document.querySelector('select[name="nationality"]');
+        const residencySelect = document.querySelector('select[name="residenceCountry"]');
+        const residencyDocSection = document.getElementById('residencyDocSection');
+        const residencyDocInput = document.getElementById('residencyDoc');
+
+        function checkResidencyRequirement() {
+            const nationality = nationalitySelect.value;
+            const residenceCountry = residencySelect.value;
+            
+            if ((residenceCountry === 'USA' || residenceCountry === 'CA' || residenceCountry === 'UK') &&
+                nationality && nationality !== residenceCountry) {
+                residencyDocSection.style.display = 'block';
+                residencyDocInput.required = true;
+                
+                // Update upload button text based on residence country
+                const uploadText = {
+                    'USA': 'Upload Green Card',
+                    'CA': 'Upload Permanent Resident Card',
+                    'UK': 'Upload Visa/Residence Permit'
+                }[residenceCountry];
+                
+                residencyDocSection.querySelector('.upload-btn span').textContent = uploadText;
+            } else {
+                residencyDocSection.style.display = 'none';
+                residencyDocInput.required = false;
+            }
+        }
+
+        nationalitySelect.addEventListener('change', checkResidencyRequirement);
+        residencySelect.addEventListener('change', checkResidencyRequirement);
+
+        // File upload preview and validation
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    // Update button text
+                    const uploadBtn = this.previousElementSibling;
+                    uploadBtn.querySelector('span').textContent = file.name;
+
+                    // Validate file size
+                    const maxSize = 5 * 1024 * 1024; // 5MB
+                    if (file.size > maxSize) {
+                        alert('File is too large. Please select a smaller file (max 5MB).');
+                        this.value = '';
+                        uploadBtn.querySelector('span').textContent = 'Choose File';
+                    }
+                }
+            });
+        });
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Additional validation can be added here
+            
+            if (this.checkValidity()) {
+                alert('Thank you for your application! We will review your submission and contact you shortly.');
+                // Form submission logic would go here
+            } else {
+                alert('Please fill in all required fields correctly.');
+            }
+        });
+    </script>
+</body>
+</html> 
