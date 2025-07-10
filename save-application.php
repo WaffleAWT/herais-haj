@@ -1,98 +1,105 @@
 <?php
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// Set headers
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
+
+// Log function
+function logMessage($message) {
+    error_log(date('[Y-m-d H:i:s] ') . $message . "\n", 3, 'application_log.txt');
+}
 
 try {
-    // Basic validation
+    logMessage('Starting application save process...');
+
+    // Verify it's a POST request
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        throw new Exception('Invalid request method');
+        throw new Exception('Only POST method is allowed');
     }
 
-    if (!isset($_POST['folder']) || !isset($_FILES['pdfFile'])) {
-        throw new Exception('Missing required data');
+    // Get form data
+    $type = $_POST['type'] ?? '';
+    $formNumber = $_POST['formNumber'] ?? '';
+    $pdfData = $_POST['pdfData'] ?? '';
+
+    if (!$type || !$formNumber || !$pdfData) {
+        throw new Exception('Missing required fields');
     }
 
-    // Get and validate folder
-    $folder = strtolower(trim($_POST['folder']));
-    if (!in_array($folder, ['visa', 'hajj', 'umrah'])) {
-        throw new Exception('Invalid folder type: ' . $folder);
+    logMessage("Processing {$type} application #{$formNumber}");
+
+    // Create directory structure
+    $baseDir = "applications/{$type}/{$formNumber}";
+    $docsDir = "{$baseDir}/documents";
+
+    // Create directories with proper permissions
+    if (!file_exists($baseDir)) {
+        mkdir($baseDir, 0777, true);
+        chmod($baseDir, 0777);
+        }
+    if (!file_exists($docsDir)) {
+        mkdir($docsDir, 0777, true);
+        chmod($docsDir, 0777);
     }
 
-    // Set up paths - try multiple possible locations
-    $possiblePaths = [
-        __DIR__ . '/applications',
-        dirname(__DIR__) . '/applications',
-        'applications'
+    logMessage("Created directories: {$baseDir} and {$docsDir}");
+
+    // Save PDF application
+    $pdfPath = "{$baseDir}/application.pdf";
+    $pdfData = str_replace('data:application/pdf;base64,', '', $pdfData);
+    $pdfData = base64_decode($pdfData);
+    file_put_contents($pdfPath, $pdfData);
+    chmod($pdfPath, 0777);
+
+    logMessage("Saved PDF application to: {$pdfPath}");
+
+    // Initialize saved files array
+    $savedFiles = ['application.pdf'];
+
+    // Handle file uploads
+    $fileTypes = [
+        'personalPhoto' => ['path' => 'personal-photo', 'required' => true],
+        'passportCopy' => ['path' => 'passport-copy', 'required' => true],
+        'residencyDoc' => ['path' => 'residency-document', 'required' => false]
     ];
 
-    $baseDir = null;
-    foreach ($possiblePaths as $path) {
-        if (is_dir($path) || mkdir($path, 0777, true)) {
-            $baseDir = $path;
-            break;
+    foreach ($fileTypes as $fileKey => $fileInfo) {
+        if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
+            $file = $_FILES[$fileKey];
+            $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $newPath = "{$docsDir}/{$fileInfo['path']}.{$ext}";
+
+            if (move_uploaded_file($file['tmp_name'], $newPath)) {
+                chmod($newPath, 0777);
+                $savedFiles[] = "documents/{$fileInfo['path']}.{$ext}";
+                logMessage("Saved {$fileKey} to: {$newPath}");
+            } else {
+                throw new Exception("Failed to save {$fileKey}");
+            }
+        } elseif ($fileInfo['required']) {
+            throw new Exception("Required file {$fileKey} is missing");
         }
     }
 
-    if (!$baseDir) {
-        throw new Exception('Could not create or find applications directory');
-    }
-
-    // Create subfolder
-    $folderPath = $baseDir . '/' . $folder;
-    if (!is_dir($folderPath) && !mkdir($folderPath, 0777, true)) {
-        throw new Exception('Failed to create subfolder: ' . $folder);
-    }
-
-    // Handle file upload
-    $file = $_FILES['pdfFile'];
-    if ($file['error'] !== UPLOAD_ERR_OK) {
-        throw new Exception('File upload failed with error code: ' . $file['error']);
-    }
-
-    $fileName = basename($file['name']);
-    $targetPath = $folderPath . '/' . $fileName;
-
-    // Ensure it's a PDF
-    $fileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-    if ($fileType !== 'pdf') {
-        throw new Exception('Invalid file type. Only PDF files are allowed.');
-    }
-
-    // Try to move the file
-    if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
-        // If move_uploaded_file fails, try direct file writing
-        if (isset($_POST['pdfData'])) {
-            $pdfData = $_POST['pdfData'];
-            // Remove data URI prefix if present
-            if (strpos($pdfData, 'data:application/pdf;base64,') === 0) {
-                $pdfData = substr($pdfData, 28);
-            }
-            if (!file_put_contents($targetPath, base64_decode($pdfData))) {
-                throw new Exception('Failed to write PDF file');
-            }
-        } else {
-            throw new Exception('Failed to save file and no backup data provided');
-        }
-    }
-
-    // Set permissions
-    chmod($targetPath, 0644);
-
-    // Return success with path info
+    // Return success response
     echo json_encode([
         'success' => true,
-        'message' => 'File saved successfully',
-        'path' => $targetPath,
-        'folder' => $folder
+        'applicationType' => $type,
+        'applicationNumber' => $formNumber,
+        'savedFiles' => $savedFiles,
+        'message' => 'Application saved successfully'
     ]);
 
 } catch (Exception $e) {
-    error_log('PDF Save Error: ' . $e->getMessage());
+    logMessage("Error: " . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage()
     ]);
 }
-?> 

@@ -313,7 +313,7 @@
                                     <i class="fas fa-upload mr-2"></i>
                                     <span>Upload Personal Photo</span>
                                 </div>
-                                <input type="file" accept=".jpg,.jpeg,.png,.gif,.bmp" required class="form-input">
+                                <input type="file" id="personalPhoto" accept=".jpg,.jpeg,.png,.gif,.bmp" required class="form-input">
                             </div>
                         </div>
 
@@ -332,7 +332,7 @@
                                     <i class="fas fa-upload mr-2"></i>
                                     <span>Upload Passport Copy</span>
                                 </div>
-                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" required class="form-input">
+                                <input type="file" id="passportCopy" accept=".pdf,.jpg,.jpeg,.png" required class="form-input">
                             </div>
                             <p class="text-sm text-gray-500 mt-2">Accepted formats: PDF, JPG, JPEG, PNG</p>
                         </div>
@@ -353,7 +353,7 @@
                                     <i class="fas fa-upload mr-2"></i>
                                     <span>Upload Residency Document</span>
                                 </div>
-                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" class="form-input">
+                                <input type="file" id="residencyDoc" accept=".pdf,.jpg,.jpeg,.png" class="form-input">
                             </div>
                             <p class="text-sm text-gray-500 mt-2">Accepted formats: PDF, JPG, JPEG, PNG (Max 5MB)</p>
                         </div>
@@ -390,13 +390,18 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="text-center space-x-4">
-                        <button type="button" onclick="generatePDF()" class="bg-white border-2 border-yellow-500 text-yellow-700 px-12 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all">
-                            <i class="fas fa-file-pdf mr-2"></i>Preview as PDF
-                        </button>
+                    <div class="text-center">
                         <button type="submit" class="bg-gold-gradient text-black px-12 py-4 rounded-full font-semibold text-lg hover:shadow-lg transition-all">
                             Submit Application
                         </button>
+                    </div>
+
+                    <!-- Loading Indicator (hidden by default) -->
+                    <div id="loadingIndicator" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+                            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+                            <p class="text-gray-700">Processing your application...</p>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -412,6 +417,7 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/save-application.js"></script>
     <script>
         // Initialize AOS
         AOS.init({
@@ -460,227 +466,6 @@
                 return { type: 'hajj', folder: 'hajj' };
             }
             return { type: 'visa', folder: 'visa' };
-        }
-
-        async function generatePDF() {
-            try {
-                // Create new PDF document
-                const doc = new jsPDF();
-                
-                // Generate form number first
-                const formNumber = generateFormNumber();
-                const form = document.querySelector('form');
-                const packageSelect = form.querySelector('select');
-                const selectedPackage = packageSelect ? packageSelect.value : 'Visa Package';
-                const { type, folder } = getApplicationType(selectedPackage);
-
-                // Load images as base64 to ensure they're embedded correctly
-                const titleImage = await loadImage('assets/title.jpg');
-                
-                // Convert webp to png for logo
-                const img = new Image();
-                await new Promise((resolve, reject) => {
-                    img.onload = resolve;
-                    img.onerror = reject;
-                    img.src = 'assets/logo.webp';
-                });
-                const canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-                const logoImage = canvas.toDataURL('image/png');
-                
-                // Add images to PDF
-                const pageWidth = doc.internal.pageSize.getWidth();
-                
-                // Add title image (left) - even smaller size
-                doc.addImage(titleImage, 'JPEG', 15, 10, 35, 12);
-                
-                // Add logo image (right) - even smaller size
-                doc.addImage(logoImage, 'PNG', pageWidth - 30, 10, 15, 12);
-                
-                // Initialize yPos for content positioning
-                let yPos = 35;
-                
-                // Add form title with form number
-                doc.setFontSize(16);
-                doc.setFont(undefined, 'bold');
-                doc.text(`${type.toUpperCase()} Application Form # ${type.toLowerCase()}-${formNumber}`, 105, yPos, { align: 'center' });
-                
-                // Reset font and continue with content
-                doc.setFont(undefined, 'normal');
-                yPos += 15; // Add spacing after title
-                
-                // Set default font size for content
-                doc.setFontSize(11);
-                doc.setTextColor(0, 0, 0);
-
-                // Helper function to add a field to PDF with proper spacing
-                function addField(label, value, y) {
-                    doc.setFontSize(10); // Set size for field text
-                    const labelWidth = doc.getTextWidth(label + ': ');
-                    doc.setFont(undefined, 'bold');
-                    doc.text(label + ': ', 20, y);
-                    doc.setFont(undefined, 'normal');
-                    const displayValue = value ? value.toString().trim() : 'Not provided';
-                    doc.text(displayValue, 20 + labelWidth + doc.getTextWidth(' '), y);
-                    return y + 7; // Reduced spacing between fields
-                }
-
-                // Package Selection
-                doc.setFontSize(12);
-                doc.setFont(undefined, 'bold');
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, yPos - 5, 170, 8, 'F');
-                doc.text('Selected Package', 20, yPos);
-                yPos += 7;
-                doc.setFont(undefined, 'normal');
-                yPos = addField('Package Type', selectedPackage, yPos);
-                yPos += 5;
-
-                // Personal Information
-                doc.setFont(undefined, 'bold');
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, yPos - 5, 170, 8, 'F');
-                doc.text('Personal Information', 20, yPos);
-                yPos += 10;
-
-                const fullName = [
-                    getFieldValue(form, 'firstName'),
-                    getFieldValue(form, 'middleName'),
-                    getFieldValue(form, 'lastName')
-                ].filter(Boolean).join(' ');
-
-                yPos = addField('Full Name', fullName, yPos);
-                yPos = addField('Gender', getFieldValue(form, 'gender'), yPos);
-                yPos = addField('Marital Status', getFieldValue(form, 'maritalStatus'), yPos);
-                yPos = addField('Date of Birth', getFieldValue(form, 'dateOfBirth'), yPos);
-                yPos = addField('Nationality', getFieldValue(form, 'nationality'), yPos);
-                yPos = addField('Birth Country', getFieldValue(form, 'birthCountry'), yPos);
-                yPos = addField('Profession', getFieldValue(form, 'profession'), yPos);
-
-                // Add new page if needed
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-
-                // Contact Information
-                doc.setFont(undefined, 'bold');
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, yPos - 5, 170, 8, 'F');
-                doc.text('Contact Information', 20, yPos);
-                yPos += 10;
-
-                yPos = addField('Mobile', getFieldValue(form, 'mobile'), yPos);
-                yPos = addField('WhatsApp', getFieldValue(form, 'whatsapp'), yPos);
-                yPos = addField('Email', getFieldValue(form, 'email'), yPos);
-
-                // Current Residence
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-
-                doc.setFont(undefined, 'bold');
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, yPos - 5, 170, 8, 'F');
-                doc.text('Current Residence', 20, yPos);
-                yPos += 10;
-
-                yPos = addField('Country', getFieldValue(form, 'residenceCountry'), yPos);
-                yPos = addField('City', getFieldValue(form, 'city'), yPos);
-                yPos = addField('ZIP/Postal Code', getFieldValue(form, 'zipCode'), yPos);
-                yPos = addField('Address', getFieldValue(form, 'address'), yPos);
-
-                // Passport Information
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-
-                doc.setFont(undefined, 'bold');
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, yPos - 5, 170, 8, 'F');
-                doc.text('Passport Information', 20, yPos);
-                yPos += 10;
-
-                yPos = addField('Passport Number', getFieldValue(form, 'passportNumber'), yPos);
-                yPos = addField('Issue Place', getFieldValue(form, 'issuePlace'), yPos);
-                yPos = addField('Issue Date', getFieldValue(form, 'issueDate'), yPos);
-                yPos = addField('Expiry Date', getFieldValue(form, 'expiryDate'), yPos);
-
-                // Travel Dates
-                if (yPos > 250) {
-                    doc.addPage();
-                    yPos = 20;
-                }
-
-                doc.setFont(undefined, 'bold');
-                doc.setFillColor(240, 240, 240);
-                doc.rect(20, yPos - 5, 170, 8, 'F');
-                doc.text('Travel Dates', 20, yPos);
-                yPos += 10;
-
-                yPos = addField('Expected Arrival', getFieldValue(form, 'arrivalDate'), yPos);
-                yPos = addField('Expected Departure', getFieldValue(form, 'departureDate'), yPos);
-
-                // Add footer with divider line
-                const footerY = doc.internal.pageSize.getHeight() - 30; // Position footer 30 units from bottom
-                doc.setDrawColor(200, 200, 200);
-                doc.line(20, footerY - 5, 190, footerY - 5);
-                
-                doc.setFontSize(9);
-                doc.setTextColor(100, 100, 100);
-                
-                // Centered contact info
-                doc.text('Email: info@heraishajj.com | +1 519 800 1353', 105, footerY, { align: 'center' });
-                
-                // Centered website in bold
-                doc.setFont(undefined, 'bold');
-                doc.text('www.heraishajj.com', 105, footerY + 5, { align: 'center' });
-                
-                // Right-aligned submission timestamp, moved down further
-                doc.setFont(undefined, 'normal');
-                doc.text(`Submitted: ${new Date().toLocaleString()}`, 190, footerY + 25, { align: 'right' });
-
-                // Save PDF with new naming format
-                const fileName = `${type}-${formNumber}.pdf`;
-                
-                // Get PDF as base64 and blob
-                const pdfBase64 = doc.output('datauristring');
-                const pdfBlob = doc.output('blob');
-                
-                // Save locally for user
-                doc.save(fileName);
-
-                // Prepare form data for server
-                const formData = new FormData();
-                formData.append('pdfFile', pdfBlob, fileName);
-                formData.append('folder', folder);
-                formData.append('pdfData', pdfBase64);
-
-                // Send to server using fetch
-                fetch('save-application.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (!data.success) {
-                        throw new Error(data.error || 'Failed to save on server');
-                    }
-                })
-                .catch(error => {
-                    console.error('Server save error:', error);
-                    alert('Note: The PDF was downloaded but could not be saved to our records. Please keep your copy safe.');
-                });
-
-            } catch (error) {
-                console.error('Error generating PDF:', error);
-                alert('There was an error generating the PDF. Please try again.');
-            }
         }
 
         // Country list for nationality and birth country
@@ -774,16 +559,263 @@
         });
 
         // Form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            // Additional validation can be added here
-            
-            if (this.checkValidity()) {
-                alert('Thank you for your application! We will review your submission and contact you shortly.');
-                // Form submission logic would go here
-            } else {
+            if (!this.checkValidity()) {
                 alert('Please fill in all required fields correctly.');
+                return;
+            }
+
+            // Show loading indicator
+            document.getElementById('loadingIndicator').classList.remove('hidden');
+            
+            try {
+                // Create new PDF document
+                const doc = new jsPDF();
+                
+                // Generate form number first
+                const formNumber = generateFormNumber();
+                const packageSelect = this.querySelector('select');
+                const selectedPackage = packageSelect ? packageSelect.value : 'Visa Package';
+                const { type, folder } = getApplicationType(selectedPackage);
+
+                // Load images as base64 to ensure they're embedded correctly
+                const titleImage = await loadImage('assets/title.jpg');
+                
+                // Convert webp to png for logo
+                const img = new Image();
+                await new Promise((resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = reject;
+                    img.src = 'assets/logo.webp';
+                });
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const logoImage = canvas.toDataURL('image/png');
+                
+                // Add images to PDF
+                const pageWidth = doc.internal.pageSize.getWidth();
+                
+                // Add title image (left) - even smaller size
+                doc.addImage(titleImage, 'JPEG', 15, 10, 35, 12);
+                
+                // Add logo image (right) - even smaller size
+                doc.addImage(logoImage, 'PNG', pageWidth - 30, 10, 15, 12);
+                
+                // Initialize yPos for content positioning
+                let yPos = 35;
+                
+                // Add form title with form number
+                doc.setFontSize(16);
+                doc.setFont(undefined, 'bold');
+                doc.text(`${type.toUpperCase()} Application Form # ${type.toLowerCase()}-${formNumber}`, 105, yPos, { align: 'center' });
+                
+                // Reset font and continue with content
+                doc.setFont(undefined, 'normal');
+                yPos += 15; // Add spacing after title
+                
+                // Set default font size for content
+                doc.setFontSize(11);
+                doc.setTextColor(0, 0, 0);
+
+                // Helper function to add a field to PDF with proper spacing
+                function addField(label, value, y) {
+                    doc.setFontSize(10); // Set size for field text
+                    const labelWidth = doc.getTextWidth(label + ': ');
+                    doc.setFont(undefined, 'bold');
+                    doc.text(label + ': ', 20, y);
+                    doc.setFont(undefined, 'normal');
+                    const displayValue = value ? value.toString().trim() : 'Not provided';
+                    doc.text(displayValue, 20 + labelWidth + doc.getTextWidth(' '), y);
+                    return y + 7; // Reduced spacing between fields
+                }
+
+                // Package Selection
+                doc.setFontSize(12);
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Selected Package', 20, yPos);
+                yPos += 7;
+                doc.setFont(undefined, 'normal');
+                yPos = addField('Package Type', selectedPackage, yPos);
+                yPos += 5;
+
+                // Personal Information
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Personal Information', 20, yPos);
+                yPos += 10;
+
+                const fullName = [
+                    getFieldValue(this, 'firstName'),
+                    getFieldValue(this, 'middleName'),
+                    getFieldValue(this, 'lastName')
+                ].filter(Boolean).join(' ');
+
+                yPos = addField('Full Name', fullName, yPos);
+                yPos = addField('Gender', getFieldValue(this, 'gender'), yPos);
+                yPos = addField('Marital Status', getFieldValue(this, 'maritalStatus'), yPos);
+                yPos = addField('Date of Birth', getFieldValue(this, 'dateOfBirth'), yPos);
+                yPos = addField('Nationality', getFieldValue(this, 'nationality'), yPos);
+                yPos = addField('Birth Country', getFieldValue(this, 'birthCountry'), yPos);
+                yPos = addField('Profession', getFieldValue(this, 'profession'), yPos);
+
+                // Add new page if needed
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                // Contact Information
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Contact Information', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Mobile', getFieldValue(this, 'mobile'), yPos);
+                yPos = addField('WhatsApp', getFieldValue(this, 'whatsapp'), yPos);
+                yPos = addField('Email', getFieldValue(this, 'email'), yPos);
+
+                // Current Residence
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Current Residence', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Country', getFieldValue(this, 'residenceCountry'), yPos);
+                yPos = addField('City', getFieldValue(this, 'city'), yPos);
+                yPos = addField('ZIP/Postal Code', getFieldValue(this, 'zipCode'), yPos);
+                yPos = addField('Address', getFieldValue(this, 'address'), yPos);
+
+                // Passport Information
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Passport Information', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Passport Number', getFieldValue(this, 'passportNumber'), yPos);
+                yPos = addField('Issue Place', getFieldValue(this, 'issuePlace'), yPos);
+                yPos = addField('Issue Date', getFieldValue(this, 'issueDate'), yPos);
+                yPos = addField('Expiry Date', getFieldValue(this, 'expiryDate'), yPos);
+
+                // Travel Dates
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFont(undefined, 'bold');
+                doc.setFillColor(240, 240, 240);
+                doc.rect(20, yPos - 5, 170, 8, 'F');
+                doc.text('Travel Dates', 20, yPos);
+                yPos += 10;
+
+                yPos = addField('Expected Arrival', getFieldValue(this, 'arrivalDate'), yPos);
+                yPos = addField('Expected Departure', getFieldValue(this, 'departureDate'), yPos);
+
+                // Add footer with divider line
+                const footerY = doc.internal.pageSize.getHeight() - 30;
+                doc.setDrawColor(200, 200, 200);
+                doc.line(20, footerY - 5, 190, footerY - 5);
+                
+                doc.setFontSize(9);
+                doc.setTextColor(100, 100, 100);
+                
+                // Centered contact info
+                doc.text('Email: info@heraishajj.com | +1 519 800 1353', 105, footerY, { align: 'center' });
+                
+                // Centered website in bold
+                doc.setFont(undefined, 'bold');
+                doc.text('www.heraishajj.com', 105, footerY + 5, { align: 'center' });
+                
+                // Right-aligned submission timestamp
+                doc.setFont(undefined, 'normal');
+                doc.text(`Submitted: ${new Date().toLocaleString()}`, 190, footerY + 25, { align: 'right' });
+
+                // Generate filename and paths
+                const fileName = `${type}-${formNumber}.pdf`;
+                
+                // Get PDF as blob and base64
+                const pdfBlob = doc.output('blob');
+                const pdfBase64 = doc.output('datauristring');
+                
+                // Download for user
+                saveAs(pdfBlob, fileName);
+
+                // Create FormData for server
+                const formData = new FormData();
+                formData.append('type', folder);
+                formData.append('formNumber', formNumber);
+                formData.append('pdfData', pdfBase64);
+
+                // Add uploaded files if they exist
+                const personalPhotoInput = document.querySelector('#personalPhoto');
+                const passportCopyInput = document.querySelector('#passportCopy');
+                const residencyDocInput = document.querySelector('#residencyDoc');
+
+                if (personalPhotoInput?.files[0]) {
+                    formData.append('personalPhoto', personalPhotoInput.files[0]);
+                }
+                if (passportCopyInput?.files[0]) {
+                    formData.append('passportCopy', passportCopyInput.files[0]);
+                }
+                if (residencyDocInput?.files[0]) {
+                    formData.append('residencyDoc', residencyDocInput.files[0]);
+                }
+
+                try {
+                    console.log('Processing application...');
+                    console.log('Form data contents:', {
+                        type: folder,
+                        formNumber: formNumber,
+                        files: {
+                            personalPhoto: personalPhotoInput?.files[0]?.name,
+                            passportCopy: passportCopyInput?.files[0]?.name,
+                            residencyDoc: residencyDocInput?.files[0]?.name
+                        }
+                    });
+
+                    // Save application to server
+                    const result = await saveApplication(formData);
+
+                    // Show success message
+                    const successMessage = `Thank you! Your ${result.applicationType} application #${result.applicationNumber} has been submitted successfully.\n\nSaved files:\n- ${result.savedFiles.join('\n- ')}`;
+                    alert(successMessage);
+                    
+                    // Reset form
+                    this.reset();
+                } catch (error) {
+                    console.error('Error saving files:', error);
+                    alert('There was an error saving files. Please check the browser console for details and contact support if the issue persists.');
+                } finally {
+                    // Hide loading indicator
+                    document.getElementById('loadingIndicator').classList.add('hidden');
+                }
+            } catch (error) {
+                console.error('Error processing application:', error);
+                alert('There was an error processing your application. Please try again.');
+            } finally {
+                // Hide loading indicator
+                document.getElementById('loadingIndicator').classList.add('hidden');
             }
         });
     </script>

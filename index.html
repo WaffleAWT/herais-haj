@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -290,7 +290,7 @@
         
         /* Modern Split Hero Design */
         .modern-hero {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -304,21 +304,10 @@
             top: 0;
             width: 60%;
             height: 100%;
-            background: url('assets/main 5.webp');
+            background: url('assets/main.jpg');
             background-size: cover;
             background-position: center;
             clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-            z-index: 1;
-        }
-        
-        .hero-image-side::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(212, 175, 55, 0.2), rgba(0, 0, 0, 0.3));
             z-index: 1;
         }
         
@@ -468,59 +457,191 @@
         .gallery-item:hover .gallery-overlay {
             opacity: 1;
         }
+
+        @media (max-width: 768px) {
+            .hero-image-side {
+                display: none;
+            }
+
+            .hero-content-side {
+                width: 100%;
+                padding: 2rem;
+                text-align: center;
+            }
+
+            .geometric-shapes {
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .modern-hero {
+                padding-top: 6rem;
+                padding-bottom: 3rem;
+            }
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            object-fit: cover;
+        }
+        .carousel-image.active {
+            opacity: 1;
+        }
+
+        .swiper {
+            width: 100%;
+            aspect-ratio: 21/10;
+        }
+        @media (max-width: 768px) {
+            .swiper {
+                aspect-ratio: 4/3;
+            }
+        }
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+            color: white;
+        }
+        .swiper-pagination-bullet {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.5);
+            opacity: 1;
+        }
+        .swiper-pagination-bullet-active {
+            background: #fff;
+            width: 20px;
+            border-radius: 4px;
+        }
+        /* Navigation buttons */
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 60px;
+            height: 60px;
+            margin-top: -30px;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        /* Remove default Swiper arrow content */
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            display: none !important;
+        }
+
+        /* Custom arrow styles */
+        .swiper-button-next::before,
+        .swiper-button-prev::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #fff;
+            border-left: 0;
+            border-bottom: 0;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-button-next::before {
+            transform: rotate(45deg);
+            right: 25px;
+        }
+
+        .swiper-button-prev::before {
+            transform: rotate(-135deg);
+            left: 25px;
+        }
+
+        .swiper-button-next:hover::before,
+        .swiper-button-prev:hover::before {
+            opacity: 1;
+            width: 45px;
+            height: 45px;
+        }
     </style>
 </head>
-<body class="font-inter text-gray-800">
+<body class="font-inter text-gray-800 overflow-x-hidden">
     
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 w-full bg-white shadow-lg z-50 transition-all duration-300">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
+    <nav id="navbar" class="fixed top-0 w-screen bg-white shadow-lg z-50 transition-all duration-300">
+        <div class="w-full px-2 md:px-4">
+            <div class="flex justify-between items-center py-2 md:py-4 max-w-[100vw]">
+                <!-- Logo side -->
                 <div class="flex items-center">
-                    <img src="assets/title.png" alt="Herais Hajj" class="h-20 w-auto">
+                    <img src="assets/title.png" alt="Herais Hajj" class="h-10 md:h-20 w-auto">
                 </div>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8">
                     <a href="#home" class="text-gray-700 hover:text-yellow-600 transition-colors font-medium">Home</a>
                     <a href="#packages" class="text-gray-700 hover:text-yellow-600 transition-colors font-medium">Packages</a>
-                    <a href="#about" class="text-gray-700 hover:text-yellow-600 transition-colors font-medium">About Us</a>
+                    <a href="#about" class="text-gray-700 hover:text-yellow-600 transition-colors font-medium">Sacred Cities</a>
                     <a href="#gallery" class="text-gray-700 hover:text-yellow-600 transition-colors font-medium">Gallery</a>
                     <a href="#contact" class="text-gray-700 hover:text-yellow-600 transition-colors font-medium">Contact</a>
                 </div>
                 
                 <!-- Right side with logo and mobile menu -->
-                <div class="flex items-center space-x-4">
-                    <img src="assets/logo.png" alt="Logo" class="h-20 w-auto">
+                <div class="flex items-center gap-3 md:gap-4">
+                    <img src="assets/logo.png" alt="Logo" class="h-10 md:h-20 w-auto">
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-yellow-600 focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
+                        <button id="mobile-menu-btn" class="text-gray-700 hover:text-yellow-600 focus:outline-none p-2">
+                            <i class="fas fa-bars text-2xl"></i>
                     </button>
                     </div>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="#home" class="block py-2 text-gray-700 hover:text-yellow-600 transition-colors">Home</a>
-                <a href="#packages" class="block py-2 text-gray-700 hover:text-yellow-600 transition-colors">Packages</a>
-                <a href="#about" class="block py-2 text-gray-700 hover:text-yellow-600 transition-colors">About Us</a>
-                <a href="#gallery" class="block py-2 text-gray-700 hover:text-yellow-600 transition-colors">Gallery</a>
-                <a href="#contact" class="block py-2 text-gray-700 hover:text-yellow-600 transition-colors">Contact</a>
+            <div id="mobile-menu" class="hidden md:hidden pb-4 absolute w-full left-0 bg-white border-t border-gray-200">
+                <div class="flex flex-col space-y-3 px-4">
+                    <a href="#home" class="py-2 text-gray-700 hover:text-yellow-600 transition-colors">Home</a>
+                    <a href="#packages" class="py-2 text-gray-700 hover:text-yellow-600 transition-colors">Packages</a>
+                    <a href="#about" class="py-2 text-gray-700 hover:text-yellow-600 transition-colors">Sacred Cities</a>
+                    <a href="#gallery" class="py-2 text-gray-700 hover:text-yellow-600 transition-colors">Gallery</a>
+                    <a href="#contact" class="py-2 text-gray-700 hover:text-yellow-600 transition-colors">Contact</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Home Section - Modern Split Design -->
-    <section id="home" class="modern-hero">
+    <!-- Desktop Home Section -->
+    <section id="home" class="modern-hero hidden md:flex">
         <!-- Floating geometric shapes -->
         <div class="geometric-shapes"></div>
         
         <!-- Content Side -->
         <div class="hero-content-side">
             <div class="container mx-auto" data-aos="fade-right" data-aos-duration="1200">
-                
                 <h1 class="font-playfair text-6xl md:text-8xl font-bold text-gray-800 mb-24 mt-16 leading-tight">
                     <span class="text-yellow-600">Hajj & Umrah</span>
                 </h1>
@@ -530,7 +651,7 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 mb-8 ml-12 sm:ml-24">
-                    <a href="#packages" class="bg-gold-gradient text-black px-6 sm:px-8 py-4 rounded-full text-base sm:text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap">
+                    <a href="#packages" class="bg-gold-gradient text-black px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transform hover:scale-105 transition-all duration-300 inline-flex items-center justify-center whitespace-nowrap">
                         <i class="fas fa-box-open mr-2 flex-shrink-0"></i>
                         <span>Our Packages</span>
                     </a>
@@ -551,6 +672,45 @@
         
         <!-- Image Side -->
         <div class="hero-image-side" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200"></div>
+    </section>
+
+    <!-- Mobile Home Section -->
+    <section id="home-mobile" class="md:hidden min-h-screen bg-white relative pt-20 pb-12 w-screen">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="assets/main.jpg" alt="Background" class="w-full h-full object-cover opacity-15">
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 max-w-[100vw]">
+            <div class="max-w-sm mx-auto">
+                <h1 class="font-playfair text-4xl font-bold text-gray-800 mb-6">
+                    <span class="text-yellow-600">Hajj & Umrah</span>
+                </h1>
+                
+                <p class="text-base text-gray-600 mb-8">
+                    Embark on the sacred journey of a lifetime with our Umrah & Hajj packages, designed exclusively for pilgrims across <strong>USA, Canada, and UK</strong>.<br><br> We also offer visa services to Saudi Arabia. <br>(one year multiple entry visa).
+                </p>
+                
+                <div class="w-full mb-8">
+                    <a href="#packages" class="bg-gold-gradient text-black px-6 py-3 rounded-full text-base font-semibold hover:shadow-lg transition-all duration-300 inline-flex items-center justify-center">
+                        <i class="fas fa-box-open mr-2"></i>
+                        <span>Our Packages</span>
+                    </a>
+                </div>
+                
+                <div class="flex flex-col gap-4 text-sm text-gray-500">
+                    <div class="flex items-center justify-center">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                        10,000+ Pilgrims Served
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="w-2 h-2 bg-yellow-500 rounded-full mr-2"></div>
+                        100% Customer Satisfaction
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Packages Section -->
@@ -594,11 +754,11 @@
                                     <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Medical Insurance for one year (Full emergency cover)</li>
                                     <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Visa issued in 24 hours</li>
                         </ul>
-                            </div>
+                    </div>
                             <div class="mt-auto">
-                                <button class="w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all">Ask for your visa now</button>
-                            </div>
-                        </div>
+                                <a href="apply.html" class="block w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all text-center">Ask for your visa now</a>
+                </div>
+                    </div>
                     </div>
                     </div>
                 </div>
@@ -611,9 +771,9 @@
                     <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 1.webp'); background-size: 100% 100%;"></div>
                     <div class="p-8 flex flex-col h-[calc(100%-16rem-0.5rem)]">
                         <div>
-                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Basic Umrah</h3>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">PREMIUM UMRAH</h3>
                             <div class="text-3xl font-bold text-gray-800 mb-6">$4,990</div>
-                            <ul class="space-y-3 mb-8">
+                        <ul class="space-y-3 mb-8">
                                 <li class="flex items-center"><i class="fas fa-check text-gray-800 mr-3"></i> Saudi Arabia Multiple Entry Visa (1 year)</li>
                                 <li class="flex items-center"><i class="fas fa-check text-gray-800 mr-3"></i> Umrah Guide book</li>
                                 <li class="flex items-center"><i class="fas fa-check text-gray-800 mr-3"></i> Round-trip economy flights</li>
@@ -624,14 +784,14 @@
                                 <li class="h-[24px]"></li>
                                 <li class="h-[24px]"></li>
                                 <li class="h-[24px]"></li>
-                            </ul>
+                        </ul>
                             <div class="bg-gray-100 p-4 rounded-lg mb-8 border border-gray-200">
                                 <p class="text-gray-800 font-semibold">Ramadan Special: $5,490</p>
                                 <p class="text-sm text-gray-600">Book now for 10% early booking discount!</p>
                     </div>
                         </div>
                         <div class="mt-auto">
-                            <button class="w-full bg-gray-800 text-white py-3 rounded-full hover:bg-gray-900 transition-colors">Reserve Now</button>
+                            <a href="apply.html" class="block w-full bg-gray-800 text-white py-3 rounded-full hover:bg-gray-900 transition-colors text-center">Reserve Now</a>
                         </div>
                     </div>
                 </div>
@@ -642,7 +802,7 @@
                     <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 2.webp'); background-size: 100% 100%;"></div>
                     <div class="p-8 flex flex-col h-[calc(100%-16rem-0.5rem)]">
                         <div>
-                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Premium Umrah</h3>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">VIP UMRAH</h3>
                             <div class="text-3xl font-bold text-blue-600 mb-6">$6,990</div>
                         <ul class="space-y-3 mb-8">
                                 <li class="flex items-center"><i class="fas fa-check text-blue-500 mr-3"></i> Multiple Entry Visa with medical insurance</li>
@@ -658,13 +818,13 @@
                             <div class="bg-blue-50 p-4 rounded-lg mb-8 border border-blue-100">
                                 <p class="text-blue-800 font-semibold">Ramadan Special: $7,490</p>
                                 <p class="text-sm text-blue-600">Book now for 10% early booking discount!</p>
-                            </div>
-                        </div>
-                        <div class="mt-auto">
-                            <button class="w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition-colors">Reserve Now</button>
-                        </div>
                     </div>
                 </div>
+                        <div class="mt-auto">
+                            <a href="apply.html" class="block w-full bg-blue-600 text-white py-3 rounded-full hover:bg-blue-700 transition-colors text-center">Reserve Now</a>
+            </div>
+        </div>
+        </div>
                 
                 <!-- High Class Umrah Package -->
                 <div class="bg-white rounded-3xl shadow-2xl overflow-hidden hover-lift transform scale-105 border-2 border-yellow-400" data-aos="fade-up" data-aos-delay="300">
@@ -672,7 +832,7 @@
                     <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 3.webp'); background-size: 100% 100%;"></div>
                     <div class="p-8 flex flex-col h-[calc(100%-16rem-0.75rem)]">
                         <div>
-                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">High Class Umrah</h3>
+                            <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">HIGH CLASS UMRAH</h3>
                             <div class="text-3xl font-bold text-yellow-600 mb-6">$9,990</div>
                         <ul class="space-y-3 mb-8">
                                 <li class="flex items-center"><i class="fas fa-check text-yellow-600 mr-3"></i> Multiple Entry Visa with medical insurance</li>
@@ -688,15 +848,15 @@
                             <div class="bg-gradient-to-r from-yellow-50 to-yellow-100 p-4 rounded-lg mb-8 border border-yellow-200">
                                 <p class="text-yellow-800 font-semibold">Ramadan Special: $11,490</p>
                                 <p class="text-sm text-yellow-600">Book now for 10% early booking discount!</p>
+                        </div>
+                        </div>
+                        <div class="mt-auto">
+                            <a href="apply.html" class="block w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-xl transition-all font-bold text-center">Reserve Now</a>
+                        </div>
+                        </div>
                     </div>
                 </div>
-                        <div class="mt-auto">
-                            <button class="w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-xl transition-all font-bold">Reserve Now</button>
-            </div>
-        </div>
-        </div>
-            </div>
-
+                
             <!-- Important Notes for Visa and Umrah -->
             <div id="visa-umrah-notes" class="max-w-4xl mx-auto mt-12" data-aos="fade-up">
                 <div class="p-6 bg-white rounded-xl shadow-lg text-center">
@@ -711,8 +871,8 @@
                             Transportation chairs are available for disabled persons in Tawaf and Safa-Marwa
                         </li>
                     </ul>
+                    </div>
                 </div>
-            </div>
             
             <!-- Hajj Packages -->
             <div id="hajj-packages" class="package-content hidden">
@@ -722,7 +882,7 @@
                         <div class="h-64 bg-cover bg-center" style="background-image: url('assets/package 3.webp'); background-size: cover; background-position: center;"></div>
                         <div class="p-8 flex flex-col">
                             <div>
-                                <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Essential Hajj Package</h3>
+                                <h3 class="font-playfair text-2xl font-bold mb-4 text-gray-800">Hajj Package</h3>
                                 <div class="text-3xl font-bold text-yellow-600 mb-6">$14,999</div>
                                 <ul class="space-y-3 mb-8">
                                     <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i> Hajj Visa to Saudi Arabia</li>
@@ -740,14 +900,14 @@
                                 <div class="bg-yellow-50 p-4 rounded-lg mb-8">
                                     <p class="text-yellow-800 font-semibold">Early Booking Offer</p>
                                     <p class="text-sm text-yellow-600">Book now and get 10% off!</p>
-                        </div>
-                        </div>
+            </div>
+        </div>
                             <div class="mt-auto">
-                                <button class="w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all">Reserve Now</button>
+                                <a href="apply.html" class="block w-full bg-gold-gradient text-black py-3 rounded-full hover:shadow-lg transition-all text-center">Reserve Now</a>
+        </div>
                         </div>
-                        </div>
-                    </div>
-                    
+            </div>
+            
                     <!-- Important Notes -->
                     <div class="mt-12 p-6 bg-white rounded-xl shadow-lg" data-aos="fade-up">
                         <h4 class="font-playfair text-xl font-bold mb-4 text-gray-800">Important Notes</h4>
@@ -761,10 +921,10 @@
                                 Special assistance available for elderly and disabled pilgrims
                             </li>
                         </ul>
+                    </div>
                 </div>
-            </div>
-        </div>
-        </div>
+                    </div>
+                </div>
     </section>
 
     <!-- About Us Section -->
@@ -806,7 +966,7 @@
                         </li>
                     </ul>
                 </div>
-
+                
                 <!-- Right Column - Madina -->
                 <div class="bg-white p-8 rounded-3xl shadow-xl mt-8" data-aos="fade-left">
                     <h2 class="font-playfair text-2xl md:text-3xl font-bold text-gray-800 mb-2 text-center">Madinah</h2>
@@ -841,66 +1001,196 @@
                             Forty consecutive prayers in the Prophet's Mosque grant special virtues
                         </li>
                     </ul>
+                    </div>
+                </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl md:text-5xl font-playfair text-center mb-12">
+                Journey Through Holy Places
+            </h2>
+
+            <!-- Swiper Carousel -->
+            <div class="max-w-6xl mx-auto">
+                <div class="swiper mySwiper rounded-xl overflow-hidden shadow-xl">
+                    <div class="swiper-wrapper">
+                        <!-- Slides will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- Navigation Arrows -->
+                    <div class="swiper-button-next !hidden md:!flex"></div>
+                    <div class="swiper-button-prev !hidden md:!flex"></div>
+                    
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
             </div>
         </div>
         </div>
     </section>
 
-    <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-gray-50 islamic-pattern">
-        <div class="particles enhanced-particles" id="gallery-particles"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-gray-800 mb-4">Sacred Moments</h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Witness the beauty and spirituality of the holy journey through these breathtaking moments</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="gallery-item rounded-2xl overflow-hidden" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="assets/kaaba.webp" alt="Kaaba" class="w-full h-64 object-cover">
-                    <div class="gallery-overlay">
-                        <span>The Sacred Kaaba</span>
+    <!-- Add Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Add Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Carousel items
+            const items = [
+                {
+                    image: 'assets/mecca 2.jpg',
+                    title: 'Haram Al-Makki',
+                    description: 'الحرم المكي'
+                },
+                {
+                    image: 'assets/mecca 3.jpg',
+                    title: 'Prayers at Haram',
+                    description: 'الصلاة في الحرم'
+                },
+                {
+                    image: 'assets/mecca at night.webp',
+                    title: 'Mecca at night',
+                    description: 'مكة المكرمة ليلآ'
+                },
+                {
+                    image: 'assets/mecca.webp',
+                    title: 'Mecca',
+                    description: 'مكة المكرمة'
+                },
+                {
+                    image: 'assets/mina mecca.jpg',
+                    title: 'Mena Mecca',
+                    description: 'ميناء مكة'
+                },
+                {
+                    image: 'assets/mount arafat 2.webp',
+                    title: 'Mount Arafat',
+                    description: 'جبل عرفات'
+                },
+                {
+                    image: 'assets/muzdalefa.jpg',
+                    title: 'Muzdalefa',
+                    description: 'المزدلفة'
+                },
+                {
+                    image: 'assets/tawaf.webp',
+                    title: 'Tawaf',
+                    description: 'الطواف'
+                },
+                {
+                    image: 'assets/ghar hera.jpg',
+                    title: "Ghar Hera'a",
+                    description: 'غار حراء'
+                },
+                {
+                    image: 'assets/kaaba.webp',
+                    title: 'Kaaba',
+                    description: 'الكعبة المشرفة'
+                },
+                {
+                    image: 'assets/clocktower mecca.webp',
+                    title: 'Clocktower Mecca',
+                    description: 'برج الساعة'
+                },
+                {
+                    image: 'assets/alqeblatyn mosque.jpg',
+                    title: 'Qeblatain Mosque',
+                    description: 'مسجد القبلتين'
+                },
+                {
+                    image: 'assets/pilgrims in prayer.webp',
+                    title: 'Pilgrims In Prayer',
+                    description: 'الحجيج في الصلاة'
+                },
+                {
+                    image: 'assets/safa and marwa.webp',
+                    title: 'Safa and Marwa',
+                    description: 'الصفا والمروة'
+                },
+                {
+                    image: 'assets/saee.jpg',
+                    title: "Sa'ee",
+                    description: 'السعي'
+                },
+                {
+                    image: 'assets/prophets mosque.webp',
+                    title: "Prophet's Mosque",
+                    description: 'المسجد النبوي الشريف'
+                },
+                {
+                    image: 'assets/qiba mosque.webp',
+                    title: 'Qiba Mosque',
+                    description: 'مسجد قباء'
+                },
+                {
+                    image: 'assets/uhud mountain.jpg',
+                    title: 'Uhud Mountain',
+                    description: 'جبل أحد'
+                },
+                {
+                    image: 'assets/zamzam well.webp',
+                    title: 'Zamzam Well',
+                    description: 'بئر زمزم'
+                }
+            ];
+
+            // Create slides
+            const swiperWrapper = document.querySelector('.swiper-wrapper');
+            items.forEach(item => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide';
+                slide.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="slide-content">
+                        <h3 class="text-xl md:text-2xl font-semibold mb-2">${item.title}</h3>
+                        <p class="text-lg md:text-xl font-noto-naskh-arabic opacity-90">${item.description}</p>
                     </div>
-                </div>
+                `;
+                swiperWrapper.appendChild(slide);
+            });
+
+            // Initialize Swiper
+            const swiper = new Swiper('.swiper', {
+                // Optional parameters
+                loop: true,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
                 
-                <div class="gallery-item rounded-2xl overflow-hidden" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="assets/tawaf.webp" alt="Tawaf" class="w-full h-64 object-cover">
-                    <div class="gallery-overlay">
-                        <span>Tawaf Around Kaaba</span>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-2xl overflow-hidden" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="assets/prophets mosque.webp" alt="Prophet's Mosque" class="w-full h-64 object-cover">
-                    <div class="gallery-overlay">
-                        <span>Prophet's Mosque</span>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-2xl overflow-hidden" data-aos="zoom-in" data-aos-delay="400">
-                    <img src="assets/mecca at night.webp" alt="Mecca at Night" class="w-full h-64 object-cover">
-                    <div class="gallery-overlay">
-                        <span>Mecca at Night</span>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-2xl overflow-hidden" data-aos="zoom-in" data-aos-delay="500">
-                    <img src="assets/pilgrims in prayer.webp" alt="Pilgrims" class="w-full h-64 object-cover">
-                    <div class="gallery-overlay">
-                        <span>Pilgrims in Prayer</span>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-2xl overflow-hidden" data-aos="zoom-in" data-aos-delay="600">
-                    <img src="assets/mount arafat.webp" alt="Mount Arafat" class="w-full h-64 object-cover">
-                    <div class="gallery-overlay">
-                        <span>Mount Arafat</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
+                // Auto-scroll every 6 seconds
+                autoplay: {
+                    delay: 6000,
+                    disableOnInteraction: false,
+                },
+
+                // If we need pagination
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+
+                // Navigation arrows
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+
+            // Pause autoplay on hover for desktop
+            const swiperContainer = document.querySelector('.swiper');
+            swiperContainer.addEventListener('mouseenter', () => {
+                swiper.autoplay.stop();
+            });
+            swiperContainer.addEventListener('mouseleave', () => {
+                swiper.autoplay.start();
+            });
+        });
+    </script>
 
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-white islamic-pattern">
@@ -1070,7 +1360,7 @@
     </footer>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/15559999999" target="_blank" class="whatsapp-float">
+    <a href="https://wa.me/15198001353" target="_blank" class="whatsapp-float">
         <i class="fab fa-whatsapp" style="margin-top: 16px;"></i>
     </a>
 

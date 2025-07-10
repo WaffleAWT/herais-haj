@@ -1,0 +1,40 @@
+# Enable POST requests
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_METHOD} POST
+    RewriteRule ^ - [L]
+</IfModule>
+
+# Allow POST method
+<Limit GET POST>
+    Order allow,deny
+    Allow from all
+</Limit>
+
+# Handle directory creation
+<IfModule mod_dav.so>
+    DAV On
+</IfModule>
+
+# Set proper MIME types
+AddType application/pdf .pdf
+AddType image/jpeg .jpg .jpeg
+AddType image/png .png
+AddType image/gif .gif
+AddType image/bmp .bmp
+
+# Allow directory creation
+Options +FollowSymLinks
+
+# Set permissions for new files
+<FilesMatch "^.*$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Ensure applications directory is writable
+<Directory "applications">
+    Options +FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory> 
